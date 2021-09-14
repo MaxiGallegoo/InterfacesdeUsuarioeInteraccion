@@ -1,0 +1,10 @@
+body{
+    background-color: grey;
+}
+
+.contenedor{
+    background-color: lightblue;
+    border: solid black;
+    border-style: inset;
+	text-align: center;
+}
