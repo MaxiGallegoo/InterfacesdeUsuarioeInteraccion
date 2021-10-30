@@ -1,0 +1,30 @@
+
+@keyframes move {
+  0% {background-position:1000px}
+  100% {background-position:0}
+  }
+#canvas{
+    background: url("../imagenes/fondo1.jpg") 0 0 repeat-x;
+    animation: move 10s linear infinite;
+    position: absolute;
+}
+
+.Instrucciones{
+  background-color: lightgreen;
+  width:300px;
+  height: 505px;
+  margin-left: 30px;
+  border: 2px solid black;
+  border-radius: 10px;
+  position: absolute;
+  display: inline-block;
+}
+#vidas{
+  margin-left: 50px;
+  font-size: 20px;
+  border: 2px solid black;
+  border-radius: 10px;
+  position: absolute;
+  display: inline-block;
+  background-color: yellow;
+}
