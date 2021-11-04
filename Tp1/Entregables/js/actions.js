@@ -9,6 +9,9 @@ let imageData;
 let imageAspectRadio;
 let imageAspectWidth;
 let imageAspectHeight;
+var maxWidth = 800; // Max width for the image
+var maxHeight = 800;    // Max height for the image
+var ratio = 0;  // Used for aspect ratio
 //botones
 
 //filtros
@@ -21,15 +24,11 @@ let imageAspectHeight;
         filtrobtn6 = document.querySelector('#Saturacion');
 
     //acciones
-        let limpiar = document.querySelector('#clean'),
-        descargar = document.querySelector('#descargar');
+         let descargar = document.querySelector('#descargar');
            
 
 //Eventos despues de tocar botones
     document.querySelector('.ifile').addEventListener("change",cargarImagen);
-    limpiar.addEventListener("click",function(){
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
     descargar.addEventListener('click',descargarImagen);
 
 filtrobtn0.addEventListener('click', filtroBinarizacion);
@@ -47,15 +46,23 @@ filtrobtn6.addEventListener('click',filtroSaturation);
         fr.onload = function(){ 
                 let img = new Image();
                 img.onload = function(){ 
-                    if(height > width){
-                        imageAspectRadio = (1.0 * height) / width;
-                        imageAspectWidth = canvas.width;
-                        imageAspectHeight = canvas.width * imageAspectRadio;
-                }  else{
-                    imageAspectRadio = (1.0 * width) /height;
-                    imageAspectWidth = canvas.height * imageAspectRadio;
-                    imageAspectHeight = canvas.height;
-                }
+                    width = img.width;
+                    height = img.height; 
+                    if (width > maxWidth && width > height) {            
+                        ratio = width / height;
+                        imageAspectHeight = maxWidth/ratio;
+                        imageAspectWidth = maxWidth; 
+                
+                    }else  if (height > maxHeight && height > width){
+                        
+                        ratio = height / width;
+                        imageAspectWidth = maxHeight/ratio;
+                        imageAspectHeight = maxHeight;
+                    }else {
+                
+                        imageAspectWidth = maxWidth;
+                        imageAspectHeight = maxHeight;
+                    }
                 canvas.width = imageAspectWidth;
                 canvas.height = imageAspectHeight;
                 ctx.drawImage(img,0,0,imageAspectWidth,imageAspectHeight);         
@@ -262,6 +269,7 @@ filtrobtn6.addEventListener('click',filtroSaturation);
         }
         return array;
     }
+        
     function filtroContraste(){     
         let k = document.querySelector("#cantContraste").value;
             contrast = Math.tan(k * Math.PI / 180.0),
@@ -274,6 +282,7 @@ filtrobtn6.addEventListener('click',filtroSaturation);
 		}
 		ctx.putImageData(imageData, 0, 0);
     }   
+
    function descargarImagen(){
             let filename = prompt("Guardar como",""),
             link = document.createElement('a');
